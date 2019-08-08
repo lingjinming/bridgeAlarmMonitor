@@ -1,0 +1,18 @@
+// public/manifest.json
+// 最基本的配置内容
+
+{
+  "name": "浏览我们的实验吧！",
+  "short_name": "桥梁监测app",
+  "icons": [
+    {
+      "src": "./static/image/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./dist/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#4DBA87"
+}

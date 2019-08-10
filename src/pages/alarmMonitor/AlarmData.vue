@@ -22,7 +22,7 @@
                 <p class="nodata" v-show="haveData">暂无数据</p>
               </div>
             </div>
-            <div class="tab-swiper vux-center" v-else="index == 2">
+            <div class="tab-swiper vux-center" v-else>
               <div style="text-align: right;margin-top: 5px;">
                 <button :class="{'on':tBut==0}" @click="hoursChange(0)">1个小时</button>
                 <button :class="{'on':tBut==1}" @click="hoursChange(1)">24个小时</button>

@@ -25,13 +25,13 @@ export default {
     },
     getNowYear() {
         var d = new Date(),
-            month = (d.getMonth() + 1)< 9 ?'0'+(d.getMonth() + 1):(d.getMonth()),
+            month = (d.getMonth() + 1) < 9 ? '0' + (d.getMonth() + 1) : (d.getMonth()),
             year = d.getFullYear();
         return [year, month].join('-') //2018-04
     },
     getLastYear() {
         var d = new Date(),
-            month = (d.getMonth() + 1)< 9 ?'0'+(d.getMonth() + 1):(d.getMonth()),
+            month = (d.getMonth() + 1) < 9 ? '0' + (d.getMonth() + 1) : (d.getMonth()),
             year = d.getFullYear();
         return [year - 1, month].join('-') //2019-04
     },
@@ -55,15 +55,6 @@ export default {
         var time = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
         return time; //2019-04-01 10：20：30
     },
-    getManagepers() {
-        return '007'
-    },
-    getBackperson() {
-        return '008'
-    },
-    getInvname() {
-        return '009'
-    },
     getUnitType() {
         return '2c93809155961b350155961fc24e0004'
     },
@@ -78,24 +69,24 @@ export default {
             // vm.$router.go(1)
     },
     funDownload(content, filename) {
-      // 创建隐藏的可下载链接
-      var eleLink = document.createElement('a');
+        // 创建隐藏的可下载链接
+        var eleLink = document.createElement('a');
 
-      if ('download' in document.createElement('a')) {
-        downloadFile(res.data, filename)
-      } else {
-        Message.error('浏览器不支持')
-      }
-      eleLink.download = filename;
-      eleLink.style.display = 'none';
-      // 字符内容转变成blob地址
-      var blob = new Blob([content]);
-      eleLink.href = URL.createObjectURL(blob);
-      // 触发点击
-      document.body.appendChild(eleLink);
-      eleLink.click();
-      // 然后移除
-      document.body.removeChild(eleLink);
+        if ('download' in document.createElement('a')) {
+            downloadFile(res.data, filename)
+        } else {
+            Message.error('浏览器不支持')
+        }
+        eleLink.download = filename;
+        eleLink.style.display = 'none';
+        // 字符内容转变成blob地址
+        var blob = new Blob([content]);
+        eleLink.href = URL.createObjectURL(blob);
+        // 触发点击
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        // 然后移除
+        document.body.removeChild(eleLink);
 
     }
 }

@@ -81,84 +81,450 @@
       this.alarmData(0)
     },
     methods:{
-      alarmDataTrend(obj,yarr,thdata) {
+      alarmDataTrend(obj,yarr,thdata,thrCode, maxVal, minVal) {
+
         console.log(obj)
         console.log(yarr)
         console.log(thdata)
         //用于保存历史数据和动态阈值的数据信息
-        // $(obj).empty();
         var monitor_echart = echarts.init(document.getElementById(obj));
-        var option = {
-          tooltip: {
-            trigger: 'axis',
-            // 设置字体的样式，显 示点击点位的信息
-            textStyle: {
-              fontFamily: 'Microsoft YaHei',
-              fontSize: 12
-            },
-            position (point, params, dom, rect, size) {
-              // 鼠标坐标和提示框位置的参考坐标系是：以外层div的左上角那一点为原点，x轴向右，y轴向下
-              // 提示框位置
-              var x = 0; // x坐标位置
-              var y = 0; // y坐标位置
+        // var option = {
+        //   tooltip: {
+        //     trigger: 'axis',
+        //     // 设置字体的样式，显 示点击点位的信息
+        //     textStyle: {
+        //       fontFamily: 'Microsoft YaHei',
+        //       fontSize: 12
+        //     },
+        //     position (point, params, dom, rect, size) {
+        //       // 鼠标坐标和提示框位置的参考坐标系是：以外层div的左上角那一点为原点，x轴向右，y轴向下
+        //       // 提示框位置
+        //       var x = 0; // x坐标位置
+        //       var y = 0; // y坐标位置
 
-              // 当前鼠标位置
-              var pointX = point[0];
-              var pointY = point[1];
+        //       // 当前鼠标位置
+        //       var pointX = point[0];
+        //       var pointY = point[1];
 
-              // 提示框大小
-              var boxWidth = size.contentSize[0];
-              var boxHeight = size.contentSize[1];
+        //       // 提示框大小
+        //       var boxWidth = size.contentSize[0];
+        //       var boxHeight = size.contentSize[1];
 
-              // boxWidth > pointX 说明鼠标左边放不下提示框
-              if (boxWidth > pointX) {
-                x = 5;
-              } else { // 左边放的下
-                x = pointX - boxWidth;
-              }
+        //       // boxWidth > pointX 说明鼠标左边放不下提示框
+        //       if (boxWidth > pointX) {
+        //         x = 5;
+        //       } else { // 左边放的下
+        //         x = pointX - boxWidth;
+        //       }
 
-              // boxHeight > pointY 说明鼠标上边放不下提示框
-              if (boxHeight > pointY) {
-                y = 5;
-              } else { // 上边放得下
-                y = pointY - boxHeight;
-              }
+        //       // boxHeight > pointY 说明鼠标上边放不下提示框
+        //       if (boxHeight > pointY) {
+        //         y = 5;
+        //       } else { // 上边放得下
+        //         y = pointY - boxHeight;
+        //       }
 
-              return [x, y];
-            },
-          },
-          calculable: true,
-          xAxis: [
-            {
-              type: 'time',
-              splitLine:{show:false},
-              axisLabel: {
-                textStyle: {
-                  fontFamily: 'Microsoft YaHei',
-                  fontSize: 12
+        //       return [x, y];
+        //     },
+        //   },
+        //   calculable: true,
+        //   xAxis: [
+        //     {
+        //       type: 'time',
+        //       splitLine:{show:false},
+        //       axisLabel: {
+        //         textStyle: {
+        //           fontFamily: 'Microsoft YaHei',
+        //           fontSize: 12
+        //         },
+        //         formatter: function (value) {
+        //           var time = new Date(value);
+        //           var dateStr = formatByLong(time, 1);
+        //           return dateStr.toString().substring(11, 23);
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   yAxis: [
+        //     {
+        //       type: 'value',
+        //       // name: monitor_unit,
+        //       scale: true,  // 放大聚焦到最终最大、最小值区间
+        //       axisLabel: { // 坐标轴刻度字体样式
+        //         textStyle: {
+        //           fontFamily: 'Microsoft YaHei',
+        //           fontSize: 12
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   //调整显示区域大小
+        //   grid: {
+        //     top:'8%',
+        //     left: '3%',
+        //     right: '4%',
+        //     bottom: '10%',
+        //     containLabel: true
+        //   },
+        //   series: [
+        //     {
+        //       // name: monitor_name,
+        //       name: '监测值',
+        //       type: 'line',
+        //       smooth: true,  // 曲线平滑显示
+        //       showSymbol: false,
+        //       data: yarr
+        //     }, {
+        //       name: '一级正向',
+        //       type: 'line',
+        //       step: 'end',
+        //       showSymbol: false,
+        //       itemStyle : {
+        //         normal:{
+        //           lineStyle:{
+        //             color:'#FF3B30'
+        //           }
+        //         }
+        //       },
+        //       data: thdata.onemax
+        //     },
+        //     {
+        //       name: '一级反向',
+        //       type: 'line',
+        //       step: 'end',
+        //       showSymbol: false,
+        //       itemStyle : {
+        //         normal:{
+        //           lineStyle:{
+        //             color:'#FF3B30'
+        //           }
+        //         }
+        //       },
+        //       data: thdata.onemin
+        //     },
+        //     {
+        //       name: '二级正向',
+        //       type: 'line',
+        //       step: 'end',
+        //       showSymbol: false,
+        //       itemStyle : {
+        //         normal:{
+        //           lineStyle:{
+        //             color:'#FF9C00'
+        //           }
+        //         }
+        //       },
+        //       data:thdata.twomax
+        //     },
+        //     {
+        //       name: '二级反向',
+        //       type: 'line',
+        //       step: 'end',
+        //       showSymbol: false,
+        //       itemStyle : {
+        //         normal:{
+        //           lineStyle:{
+        //             color:'#FF9C00'
+        //           }
+        //         }
+        //       },
+        //       data:thdata.twomin
+        //     },
+        //     {
+        //       name: '三级正向',
+        //       type: 'line',
+        //       step: 'end',
+        //       itemStyle : {
+        //         normal:{
+        //           lineStyle:{
+        //             color:'#00ADFF'
+        //           }
+        //         }
+        //       },
+        //       showSymbol: false,
+        //       data:thdata.thrmax
+        //     },
+        //     {
+        //       name: '三级反向',
+        //       type: 'line',
+        //       step: 'end',
+        //       itemStyle : {
+        //         normal:{
+        //           lineStyle:{
+        //             color:'#00ADFF'
+        //           }
+        //         }
+        //       },
+        //       showSymbol: false,
+        //       data:thdata.thrmin
+        //     }
+        //   ]
+        // };
+
+
+
+                // 阈值线展示颜色
+        var itemColor = ['#FF3B30', '#FF9C00', '#00ADFF'];
+        var series = [];
+        var yAxis = [];
+        if (thrCode === 0) {
+            series = [{
+                    name: '监测值',
+                    type: 'line',
+                    smooth: true, // 曲线平滑显示
+                    showSymbol: false,
+                    data: yarr
+
+                }, {
+                    name: '一级正向',
+                    type: 'line',
+                    step: 'end',
+                    showSymbol: false,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: itemColor[0]
+                            }
+                        }
+                    },
+                    data: thdata.onemax
                 },
-                formatter: function (value) {
-                  var time = new Date(value);
-                  var dateStr = formatByLong(time, 1);
-                  return dateStr.toString().substring(11, 23);
+                {
+                    name: '一级反向',
+                    type: 'line',
+                    step: 'end',
+                    showSymbol: false,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: itemColor[0]
+                            }
+                        }
+                    },
+                    data: thdata.onemin
+                },
+                {
+                    name: '二级正向',
+                    type: 'line',
+                    step: 'end',
+                    showSymbol: false,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: itemColor[1]
+                            }
+                        }
+                    },
+                    data: thdata.twomax
+                },
+                {
+                    name: '二级反向',
+                    type: 'line',
+                    step: 'end',
+                    showSymbol: false,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: itemColor[1]
+                            }
+                        }
+                    },
+                    data: thdata.twomin
+                },
+                {
+                    name: '三级正向',
+                    type: 'line',
+                    step: 'end',
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: itemColor[2]
+                            }
+                        }
+                    },
+                    showSymbol: false,
+                    data: thdata.thrmax
+                },
+                {
+                    name: '三级反向',
+                    type: 'line',
+                    step: 'end',
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: itemColor[2]
+                            }
+                        }
+                    },
+                    showSymbol: false,
+                    data: thdata.thrmin
                 }
-              }
+            ];
+
+            yAxis = [{
+                type: 'value',
+                // name: monitor_unit,
+                scale: true, // 放大聚焦到最终最大、最小值区间
+
+                axisLabel: { // 坐标轴刻度字体样式
+                    textStyle: {
+                        fontFamily: 'Microsoft YaHei',
+                        fontSize: 12
+                    }
+                }
+            }];
+        } else {
+            series = [{
+                name: '监测值',
+                type: 'line',
+                smooth: true, // 曲线平滑显示
+                showSymbol: false,
+                data: yarr,
+                markLine: {
+                    label: {
+                        normal: { show: false } // 去掉标线显示的数值
+                    },
+                    symbol: 'none', // 去掉箭头
+                    lineStyle: {
+                        normal: {
+                            type: 'solid'
+                        }
+                    },
+                    data: [{
+                        yAxis: thdata.onemax,
+                        scale: true, // 放大聚焦到最终最大、最小值区间
+                        itemStyle: {
+                            normal: {
+                                color: itemColor[0]
+                            }
+                        }
+                    }, {
+                        yAxis: thdata.twomax,
+                        scale: true, 
+                        itemStyle: {
+                            normal: {
+                                color: itemColor[1]
+                            }
+                        }
+                    }, {
+                        yAxis: thdata.thrmax,
+                        scale: true, 
+                        itemStyle: {
+                            normal: {
+                                color: itemColor[2]
+                            }
+                        }
+                    }, {
+                        yAxis: thdata.thrmin,
+                        scale: true, 
+                        itemStyle: {
+                            normal: {
+                                color: itemColor[2]
+                            }
+                        }
+                    }, {
+                        yAxis: thdata.twomin,
+                        scale: true, 
+                        itemStyle: {
+                            normal: {
+                                color: itemColor[1]
+                            }
+                        }
+                    }, {
+                        yAxis: thdata.onemin,
+                        scale: true, 
+                        itemStyle: {
+                            normal: {
+                                color: itemColor[0]
+                            }
+                        }
+                    }]
+                }
+
+            }];
+            if (thdata.onemax > maxVal) {
+                maxVal = thdata.onemax;
             }
-          ],
-          yAxis: [
-            {
-              type: 'value',
-              // name: monitor_unit,
-              scale: true,  // 放大聚焦到最终最大、最小值区间
-              axisLabel: { // 坐标轴刻度字体样式
+            if (thdata.onemin < minVal) {
+                minVal = thdata.onemin;
+            }
+            yAxis = {
+                type: 'value',
+                scale: true,
+                min: minVal - 0.1,
+                max: maxVal + 0.1,
+                axisLabel: {
+                    formatter: function(value) {
+                        return value.toFixed(2);
+                    }
+                }
+
+            };
+        }
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                // 设置字体的样式，显 示点击点位的信息
                 textStyle: {
-                  fontFamily: 'Microsoft YaHei',
-                  fontSize: 12
+                    fontFamily: 'Microsoft YaHei',
+                    fontSize: 12
+                },
+                extraCssText: 'align: left;',
+                formatter: function(params) {
+                    if (params.length > 1) {
+                        if (params[1].value == undefined) {
+                            return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />';
+                        } else {
+                            return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />'
+                                /*+ params[1].seriesName + '：' + params[1].value + '<br />' + params[2].seriesName + '：' + params[2].value + '<br />'
+                                + params[3].seriesName + '：' + params[3].value + '<br />' + params[4].seriesName + '：' + params[4].value + '<br />'
+                                + params[5].seriesName + '：' + params[5].value + '<br />' + params[6].seriesName + '：' + params[6].value + '<br />';*/
+                                +
+                                params[1].seriesName + '：' + params[1].value + '<br />' +
+                                params[3].seriesName + '：' + params[3].value + '<br />' +
+                                params[5].seriesName + '：' + params[5].value + '<br />' +
+                                params[6].seriesName + '：' + params[6].value + '<br />' +
+                                params[4].seriesName + '：' + params[4].value + '<br />' +
+                                params[2].seriesName + '：' + params[2].value + '<br />';
+                        }
+                    } else {
+                        if (params[0] != undefined) {
+                            return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />'
+                                /*+ '一级正向：' + thdata.onemax + '<br />' + '一级反向：'  + thdata.onemin + '<br />'
+                                + '二级正向：' + thdata.twomax + '<br />' + '二级反向：'  + thdata.twomin + '<br />'
+                                + '三级正向：' + thdata.thrmax + '<br />' + '三级反向：'  + thdata.thrmin + '<br />';*/
+                                +
+                                '一级正向：' + thdata.onemax + '<br />' +
+                                '二级正向：' + thdata.twomax + '<br />' +
+                                '三级正向：' + thdata.thrmax + '<br />' +
+                                '三级反向：' + thdata.thrmin + '<br />' +
+                                '二级反向：' + thdata.twomin + '<br />' +
+                                '一级反向：' + thdata.onemin + '<br />';
+                        }
+                    }
+                },
+                axisPointer: {
+                    animation: false
                 }
-              }
-            }
-          ],
-          //调整显示区域大小
+            },
+            calculable: true,
+            xAxis: [{
+                type: 'time',
+                splitLine: { show: false },
+                axisLabel: {
+                    textStyle: {
+                        fontFamily: 'Microsoft YaHei',
+                        fontSize: 12
+                    },
+                    formatter: function(value) {
+                        var time = new Date(value);
+                        var dateStr = formatByLong(time, 1);
+                        return dateStr.toString().substring(11, 23);
+                    }
+                }
+            }],
+            yAxis: yAxis,
+            //调整显示区域大小
           grid: {
             top:'8%',
             left: '3%',
@@ -166,100 +532,103 @@
             bottom: '10%',
             containLabel: true
           },
-          series: [
-            {
-              // name: monitor_name,
-              name: '监测值',
-              type: 'line',
-              smooth: true,  // 曲线平滑显示
-              showSymbol: false,
-              data: yarr
-            }, {
-              name: '一级正向',
-              type: 'line',
-              step: 'end',
-              showSymbol: false,
-              itemStyle : {
-                normal:{
-                  lineStyle:{
-                    color:'#FF3B30'
-                  }
-                }
-              },
-              data: thdata.onemax
-            },
-            {
-              name: '一级反向',
-              type: 'line',
-              step: 'end',
-              showSymbol: false,
-              itemStyle : {
-                normal:{
-                  lineStyle:{
-                    color:'#FF3B30'
-                  }
-                }
-              },
-              data: thdata.onemin
-            },
-            {
-              name: '二级正向',
-              type: 'line',
-              step: 'end',
-              showSymbol: false,
-              itemStyle : {
-                normal:{
-                  lineStyle:{
-                    color:'#FF9C00'
-                  }
-                }
-              },
-              data:thdata.twomax
-            },
-            {
-              name: '二级反向',
-              type: 'line',
-              step: 'end',
-              showSymbol: false,
-              itemStyle : {
-                normal:{
-                  lineStyle:{
-                    color:'#FF9C00'
-                  }
-                }
-              },
-              data:thdata.twomin
-            },
-            {
-              name: '三级正向',
-              type: 'line',
-              step: 'end',
-              itemStyle : {
-                normal:{
-                  lineStyle:{
-                    color:'#00ADFF'
-                  }
-                }
-              },
-              showSymbol: false,
-              data:thdata.thrmax
-            },
-            {
-              name: '三级反向',
-              type: 'line',
-              step: 'end',
-              itemStyle : {
-                normal:{
-                  lineStyle:{
-                    color:'#00ADFF'
-                  }
-                }
-              },
-              showSymbol: false,
-              data:thdata.thrmin
-            }
-          ]
+            // dataZoom: [{
+            //     type: 'slider',
+            //     show: true,
+            //     xAxisIndex: [0],
+            //     start: 0,
+            //     end: 100
+            // }, {
+            //     type: 'inside',
+            //     xAxisIndex: [0],
+            //     start: 0,
+            //     end: 100
+            // }],
+            series: series
         };
+        // var option = {
+        //     tooltip: {
+        //       trigger: 'axis',
+        //       // 设置字体的样式，显 示点击点位的信息
+        //       textStyle: {
+        //         fontFamily: 'Microsoft YaHei',
+        //         fontSize: 12
+        //       },
+        //       position (point, params, dom, rect, size) {
+        //         // 鼠标坐标和提示框位置的参考坐标系是：以外层div的左上角那一点为原点，x轴向右，y轴向下
+        //         // 提示框位置
+        //         var x = 0; // x坐标位置
+        //         var y = 0; // y坐标位置
+
+        //         // 当前鼠标位置
+        //         var pointX = point[0];
+        //         var pointY = point[1];
+
+        //         // 提示框大小
+        //         var boxWidth = size.contentSize[0];
+        //         var boxHeight = size.contentSize[1];
+
+        //         // boxWidth > pointX 说明鼠标左边放不下提示框
+        //         if (boxWidth > pointX) {
+        //           x = 5;
+        //         } else { // 左边放的下
+        //           x = pointX - boxWidth;
+        //         }
+
+        //         // boxHeight > pointY 说明鼠标上边放不下提示框
+        //         if (boxHeight > pointY) {
+        //           y = 5;
+        //         } else { // 上边放得下
+        //           y = pointY - boxHeight;
+        //         }
+
+        //         return [x, y];
+        //       },
+        //     },
+        //     calculable: true,
+        //     xAxis: [
+        //       {
+        //         type: 'time',
+        //         splitLine:{show:false},
+        //         axisLabel: {
+        //           textStyle: {
+        //             fontFamily: 'Microsoft YaHei',
+        //             fontSize: 12
+        //           },
+        //           formatter: function (value) {
+        //             var time = new Date(value);
+        //             var dateStr = formatByLong(time, 1);
+        //             return dateStr.toString().substring(11, 23);
+        //           }
+        //         }
+        //       }
+        //     ],
+        //     yAxis: [
+        //       {
+        //         type: 'value',
+        //         // name: monitor_unit,
+        //         scale: true,  // 放大聚焦到最终最大、最小值区间
+        //         axisLabel: { // 坐标轴刻度字体样式
+        //           textStyle: {
+        //             fontFamily: 'Microsoft YaHei',
+        //             fontSize: 12
+        //           }
+        //         }
+        //       }
+        //     ],
+        //     //调整显示区域大小
+        //     grid: {
+        //       top:'8%',
+        //       left: '3%',
+        //       right: '4%',
+        //       bottom: '10%',
+        //       containLabel: true
+        //     },
+        //     series: series
+        //   };
+
+        
+        
         function formatByLong(time, flag) {
               var dateStr;
               var date = new Date(time);
@@ -299,9 +668,15 @@
               }
               return dateStr;
             }
+        
+        
+        
+        
+        // debugger
         monitor_echart.setOption(option);
       },
       curAlarmDataTrend(time,ydata){
+        // debugger
         let alarmLine = echarts.init(document.getElementById("cur-data"));
         alarmLine.clear()
         alarmLine.setOption({
@@ -326,7 +701,8 @@
             data: time
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            scale : true,
           },
           series: [
             {
@@ -358,7 +734,6 @@
           _this.$axios({
             url: 'getHistoryData.mvc',
             method: 'post',
-            // url:'http://0.0.0.0:8081/static/data.json',
             params : {
               equipId:Storage.get('equipId'),
               monitorId:Storage.get('monprojectId'),
@@ -369,7 +744,7 @@
             .then((res)=>{
               let ret = res.data.data[0];
               if (ret.monitorvalue.length > 0){
-                _this.alarmDataTrend("alarm-data",ret.monitorvalue,ret.thresholdData);
+                _this.alarmDataTrend("alarm-data",ret.monitorvalue,ret.thresholdData,ret.thrCode,ret.maxVal,ret.minVal);
                 this.$vux.loading.hide();
 
               }else {
@@ -445,7 +820,7 @@
             if (res.data) {
               let ret = res.data.data[0];
               if (ret.monitorvalue.length > 0){
-                _this.alarmDataTrend("history-data" + index,ret.monitorvalue,ret.thresholdData);
+                _this.alarmDataTrend("history-data" + index,ret.monitorvalue,ret.thresholdData,ret.thrCode,ret.maxVal,ret.minVal);
                 this.$vux.loading.hide();
 
               }else {

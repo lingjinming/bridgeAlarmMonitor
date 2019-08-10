@@ -59,7 +59,7 @@
           userRole(){
             return this.$store.getters.getUserName
           }
-        },
+        }
     }
 </script>
 

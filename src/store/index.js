@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const state = { //要设置的全局访问的state对象，要设置的初始属性值,即所谓的状态
     userName: '',
     userId: '',
+    role: '',
     maxSize: 10485760,
     appTempUrl: 'http://60.174.207.208:21000/', //外网
     // appTempUrl:'http://10.5.4.115:8000/',//内网
@@ -34,18 +35,14 @@ const getters = { //实时监听state值的变化(最新状态)//方法名随意
     getUserId(state) {
         return state.userId
     },
+    getUserRole(state) {
+        return state.role
+    },
     isLeader(state) {
         if (state.userName == '2c9381c46ab405ed016ab5440dcd04eb') {
             return true
         } else {
             return false
-        }
-    },
-    leaderOrNormal(state) {
-        if (state.userName == '2c9381c46ab405ed016ab5440dcd04eb') {
-            return '领导'
-        } else {
-            return '运维人员'
         }
     },
     getMaxSize(state) {
@@ -87,6 +84,9 @@ const mutations = { //自定义改变state初始值的方法，这里面的参�
         }).catch((err) => {
             console.log('error', err)
         })
+    },
+    changeRole(state, role) {
+        state.role = role
     },
     changeRoleName(state, userName) {
         state.userName = userName

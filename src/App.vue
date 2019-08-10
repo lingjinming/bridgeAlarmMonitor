@@ -8,17 +8,18 @@
 export default {
   name: 'App',
   mounted(){
-    console.log(1)
      this.$axios({
           url:'getUserInfo.mvc',
           method:'post',
           params:{
-            loginName: 'szyw'
+            loginName: 'szyw',
+            // loginName: 'szld'
           }
         })
         .then((res)=>{
           let {role,roleId,userId,userName} = {...res.data.data}
-          
+
+          this.$store.commit('changeRole',role)
           this.$store.commit('changeRoleId',userId)
           this.$store.commit('changeRoleName',userName)
 

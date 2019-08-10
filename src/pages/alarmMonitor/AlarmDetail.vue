@@ -282,7 +282,7 @@
     },
     computed:{
       showBtn(){
-        if (this.$store.getters.getUserId == '2c9381c46ab405ed016ab5440dcd04eb'){ //领导登陆
+        if (this.$store.getters.getUserRole == 1){ //领导登陆
           return false
         }else { //普通用户登陆
           return true
@@ -406,8 +406,9 @@
               this.backStateidVal = Storage.get('backStateidVal');
               this.invStateidVal = Storage.get('invStateidVal');
               this.manageStateidVal = Storage.get('manageStateidVal');
-              _this.alarmListData.forEach(function(item,index) {
-                _this.alarmIdBelongId(item.alarmid,index);
+
+              _this.backListData.forEach(function(item,index) {
+                _this.alarmIdBelongId(item.backid,index);
               });
             }
             if (_this.alalysListData != undefined && _this.alalysListData.length > 0) {
@@ -437,13 +438,13 @@
             this.$vux.loading.hide()
           })
       },
-      alarmIdBelongId(alarmid,index) {
+      alarmIdBelongId(backid,index) {
         let _this = this;
         _this.$axios({
           url:'getAttListByBelongId.mvc',
           method:'post',
           params:{
-            belongId: alarmid
+            belongId: backid
           }
         }).then((res)=>{
           // _this.getHref(res,'backListData',index)
@@ -565,10 +566,22 @@
           this.$vux.loading.hide()
 
           let resData = res.data.data
-          let flag = this.invStateidVal == '72E94003A9C137AEE050050A13040B40' || this.invStateidVal == '72E94003A9C237AEE050050A13040B40'
-          if (flag&&resData){
+
+          if (this.processState == '0'){
             this.$router.push({
               name: 'AlarmCheck',
+            })
+          }else if(this.processState == '-1'){
+             this.$vux.toast.show({
+              text: '流程错误禁止操作，请联系后台管理'
+            })
+          }else if (this.processState == '3') {
+            this.$vux.toast.show({
+              text: '已办结，请勿重复排查'
+            })
+          }else if (this.processState == '4') {
+            this.$vux.toast.show({
+              text: '当前报警已解除'
             })
           }else {
             this.$vux.toast.show({
@@ -594,26 +607,29 @@
           let resData = res.data.data
           this.$vux.loading.hide()
 
-          let flag = this.backStateidVal == '4EBDE25070CFD260E050050A0E042A19' && this.invStateidVal == '72E94003A9C437AEE050050A13040B40';
-          if (flag&&res.data) {
+          if (this.processState == '1') {
             this.$router.push({
               name: 'AlarmFeedback'
             })
-          } else if (this.backStateidVal == '4EBDE25070D0D260E050050A0E042A19') {
+          } else if (this.processState == '3') {
+            this.$vux.toast.show({
+              text: '已办结，请勿重复反馈'
+            })
+          }else if (this.processState == '2') {
             this.$vux.toast.show({
               text: '当前报警信息已反馈'
             })
-          } else if (this.backStateidVal == '4EBDE25070D1D260E050050A0E042A19') {
-            this.$vux.toast.show({
-              text: '当前报警信息属于误报，可忽略'
-            })
-          } else if (this.invStateidVal == '72E94003A9C537AEE050050A13040B40') {
+          } else if (this.processState == '4') {
             this.$vux.toast.show({
               text: '当前报警已解除'
             })
-          } else {
+          } else if (this.processState == '0'){
             this.$vux.toast.show({
               text: '当前报警信息未排查,请先排查'
+            })
+          }else{
+             this.$vux.toast.show({
+              text: '流程错误禁止操作，请联系后台管理'
             })
           }
         })
@@ -632,22 +648,30 @@
           let resData = res.data.data
           this.$vux.loading.hide()
 
-          let flag = this.backStateidVal == '4EBDE25070D0D260E050050A0E042A19' && (this.manageStateidVal == '4EBDE25070D2D260E050050A0E042A19' || this.manageStateidVal == '4EBDE25070D3D260E050050A0E042A19');
-          if (flag&&resData){
+    
+          if (this.processState == '2'){
             this.$router.push({
               name: 'AlarmDispose'
             })
-          } else if (this.invStateidVal == '72E94003A9C537AEE050050A13040B40' || this.backStateidVal == '4EBDE25070D1D260E050050A0E042A19') {
+          } else if (this.processState == '4') {
             this.$vux.toast.show({
               text: '当前报警信息已解除'
             })
-          } else if (this.manageStateidVal == '4EBDE25070D4D260E050050A0E042A19') {
+          } else if (this.processState == '3') {
             this.$vux.toast.show({
               text: '已办结，请勿重复处置'
             })
-          } else {
+          } else if (this.processState == '1'){
             this.$vux.toast.show({
               text: '当前报警信息未反馈,请先进行反馈'
+            })
+          } else if (this.processState == '0'){
+            this.$vux.toast.show({
+              text: '当前报警信息未排查,请先排查'
+            })
+          }else{
+             this.$vux.toast.show({
+              text: '流程错误禁止操作，请联系后台管理'
             })
           }
         })

@@ -39,7 +39,7 @@
   import echarts from 'echarts'
 
   export default {
-        name: "Home",
+        name: "SZHome",
         data(){
             return{
               monthAlarm: 0,

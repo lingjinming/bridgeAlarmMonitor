@@ -1,6 +1,6 @@
 <template>
   <footer class="my-footer">
-    <router-link to="/home">
+    <router-link to="/SZhome">
       <i class="icon iconfont icon-shouye"></i>首页
     </router-link>
     <router-link to="/alarmMonitor">

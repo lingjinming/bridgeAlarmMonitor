@@ -20,6 +20,7 @@
       </div>
       <div class="report-table-wrapper" id="report-table">
         <ul v-if="data.length > 0">
+          <!-- <a target="_blank" download href="http://60.174.207.208:21000/bridge/template/appTemp/金寨路高架桥监测数据分析月报-17年11月.pdf">ssss</a> -->
           <li class="report-table-row" v-for="(item,index) in data">
             <div class="fujian" @click="getAttachment(item.appTempUrl,item.tempName)">
               <span></span>{{item.tempName}}
@@ -86,7 +87,8 @@
         showLoadMore: false,
         showConfirm:false,
         attachmentUrl:'',
-        attachmentName:''
+        attachmentName:'',
+        attachmentId:''
       }
     },
     mounted() {
@@ -137,7 +139,43 @@
         if (tempType=='png'||tempType=='jpg'||tempType=='jpeg'||tempType=='gif') {
           this.showImg = !this.showImg
         } else {
-          window.open(this.attachmentUrl)
+          // window.open(this.attachmentUrl)
+        this.$vux.loading.show({
+          text: '下载中'
+        })
+        this.$axios({ // 用axios发送post请求
+          method: 'post',
+          url: 'getAttachmentFiles.mvc', // 请求地址
+          responseType: 'blob', // 表明返回服务器返回的数据类型
+          params:{
+            attachmentId:this.attachmentId
+          }
+        })
+          .then((res) => { // 处理返回的文件流
+
+            // var blob = new Blob([res.data], {type: 'application/actet-stream;charset=utf-8'});
+            // var downloadElement = document.createElement('a');
+            // var href = window.URL.createObjectURL(blob); //创建下载的链接
+            // downloadElement.style.display = 'none';
+            // downloadElement.href = href;
+            // downloadElement.download =fileName ; //下载后文件名
+            // document.body.appendChild(downloadElement);
+            // downloadElement.click(); //点击下载
+            // document.body.removeChild(downloadElement); //下载完成移除元素
+            // window.URL.revokeObjectURL(href); //释放掉blob对象
+
+            download(new Blob([res.data]), this.attachmentName, tempType);
+
+            // 下载成功
+            this.$vux.loading.hide()
+            this.$vux.toast.show({
+                text:'下载成功!',
+                time:1000
+            })
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
         }
 
       },
@@ -289,14 +327,14 @@
         // console.log(res)
         let _this = this
         if (res.data.data[0]){
-          let attachmentId = res.data.data[0].id
-          let attachmentName = res.data.data[0].name
-          if(attachmentId) {
+          this.attachmentId = res.data.data[0].id
+          this.attachmentName = res.data.data[0].name
+          if(this.attachmentId) {
             _this.$axios({
               url:'downAttachment.mvc',
               method: 'post',
               params:{
-                attachmentId
+                attachmentId:this.attachmentId
               },
             })
               .then((res)=>{
@@ -311,7 +349,7 @@
                   // console.log('data.urlFile:'+data.urlFile)
                   // console.log('tempName:'+tempName)
                   // console.log('attachmentName:'+attachmentName)
-                  _this[listData][index].tempName=attachmentName;
+                  _this[listData][index].tempName=this.attachmentName;
                   _this[listData][index].appTempUrl=appTempUrl;
                 }
 

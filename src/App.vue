@@ -5,29 +5,36 @@
 </template>
 
 <script>
+import { close } from 'fs';
 export default {
   name: 'App',
   mounted(){
-     this.$axios({
+        this.$axios({
           url:'getUserInfo.mvc',
           method:'post',
           params:{
-            loginName: 'szyw',
+            loginName: window.localStorage.loginId ,
             // loginName: 'szld'
           }
         })
         .then((res)=>{
-          let {role,roleId,userId,userName} = {...res.data.data}
+          if(res.data.data){
+            let {role,roleId,userId,userName} = {...res.data.data}
 
-          this.$store.commit('changeRole',role)
-          this.$store.commit('changeRoleId',userId)
-          this.$store.commit('changeRoleName',userName)
-
+            this.$store.commit('changeRole',role)
+            this.$store.commit('changeRoleId',userId)
+            this.$store.commit('changeRoleName',userName)
+          }else{
+            // debugger
+            // console.log(location.protocol + '// '+location.host + '/#/home')
+            location.href ='file:///android_asset/www/index.html#/login'
+            
+          }
         })
         .catch((err)=>{
           console.log(err)
         })
-  }
+    }
 }
 </script>
 <style lang="less">

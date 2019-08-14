@@ -12,6 +12,8 @@
               <router-link tag="li" v-for="(item,i) in menuList" :key="i" :to="'/setting/'+item.type">
                 {{item.name}}<img src="../../assets/image/more.png" alt="">
               </router-link>
+              <!-- <router-link tag='li' to='/home'>返回</router-link> -->
+              <li @click="gobackhome">登出</li>
             </ul>
           </div>
         </div>
@@ -31,14 +33,14 @@
                 "type":"myConcern",
                 "name":"我关心的桥梁"
               },
-              // {
-              //   "type":"programSetting",
-              //   "name":"程序设置"
-              // },
               {
                 "type":"about",
                 "name":"关于系统"
-              }
+              },
+              // {
+              //   "type":"home",
+              //   "name":"返回"
+              // },
             ],
             type: 'setIndex'
           }
@@ -54,6 +56,10 @@
           //     this.$store.commit('changeRole','2c9381c46ab405ed016ab5440dcd04eb')
           //   }
           // }
+          gobackhome(){
+            // alert(location.protocol + '//'+location.host + '/#/home')
+            location.href = 'file:///android_asset/www/index.html#/login'
+          }
         },
         computed:{
           userRole(){

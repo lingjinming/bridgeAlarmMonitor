@@ -277,7 +277,9 @@
         manageStateidVal: '',
         appTempUrl:null,
         attachList:[],
-        processState:null
+        processState:null,
+        attachmentName:'',
+        attachmentId:''
       }
     },
     computed:{
@@ -361,9 +363,40 @@
           },8000)
 
         } else {
-          window.open(this.attachmentUrl)
-        }
+          // window.open(this.attachmentUrl)
+          // debugger
+          // download(this.attachmentUrl);
 
+        this.$vux.loading.show({
+          text: '下载中'
+        })
+        this.$axios({ // 用axios发送post请求
+          method: 'post',
+          url: 'getAttachmentFiles.mvc', // 请求地址
+          responseType: 'blob', // 表明返回服务器返回的数据类型
+          params:{
+            attachmentId:this.attachmentId
+          }
+        })
+          .then((res) => { // 处理返回的文件流
+            const content = res
+            const fileName = this.attachmentName
+                      //  debugger
+            download(new Blob([res.data]), fileName, tempType);
+
+
+            // 下载成功
+            this.$vux.loading.hide()
+            this.$vux.toast.show({
+                text:'下载成功!',
+                time:1000
+            })
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+
+        }
       },
       toggleImg(e){
         let flag = e.target.getAttribute('class').indexOf('showimg') //大于1表示有
@@ -512,13 +545,13 @@
         var attachList = []
         // console.log(res)
         if (res){
-          let attachmentId = res.id
-          let attachmentName = res.name
+          this.attachmentId = res.id
+          this.attachmentName = res.name
           _this.$axios({
             url:'downAttachment.mvc',
             method: 'post',
             params:{
-              attachmentId
+              attachmentId:this.attachmentId
             },
           })
             .then((res)=>{
@@ -527,7 +560,7 @@
               let tempName = data.urlFile.substring(data.urlFile.lastIndexOf("\\") + 1, data.urlFile.length);
               let appTempUrl = _this.$store.getters.getAppTempUrl+'bridge/template/appTemp/' + tempName;
               _this[listData][index].attachList.push({
-                'tempName':attachmentName,
+                'tempName':this.attachmentName,
                 'appTempUrl':appTempUrl
               })
               _this.$set(_this[listData],index,_this[listData][index]) //数据更新dom不跟新的情况

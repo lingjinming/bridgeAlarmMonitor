@@ -26,7 +26,7 @@
               <span></span>{{item.tempName}}
             </div>
             <span class="report-table-item report-table-bridge">{{item.attaname}}</span>
-            <span class="report-table-item report-table-date">{{item.reportTime}}</span>
+            <!-- <span class="report-table-item report-table-date">{{item.reportTime}}</span> -->
             <span class="report-table-item report-table-score">{{item.bridgeCount}}</span>
           </li>
           <div class="uploading" @click="upLoadingData" v-show="showLoadMore">加载更多</div>
@@ -79,7 +79,7 @@
         attachmentData: {},
         tabs: ["安全月报","安全年报"],
         showActive: 0,
-        tabsOrder: ["报告名称","报告日期","桥梁数量"],
+        tabsOrder: ["报告名称","桥梁数量"],
         showOrderActive: 0,
         showUp: false,
         showSearch: false,

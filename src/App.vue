@@ -13,23 +13,23 @@ export default {
           url:'getUserInfo.mvc',
           method:'post',
           params:{
-            loginName: window.localStorage.loginId ,
-            // loginName: 'szld'
+            // loginName: window.localStorage.loginId ,
+            loginName: 'szyw'
           }
         })
         .then((res)=>{
           if(res.data.data){
             let {role,roleId,userId,userName} = {...res.data.data}
-
             this.$store.commit('changeRole',role)
             this.$store.commit('changeRoleId',userId)
             this.$store.commit('changeRoleName',userName)
-          }else{
-            // debugger
-            // console.log(location.protocol + '// '+location.host + '/#/home')
-            location.href ='file:///android_asset/www/index.html#/login'
-            
           }
+          // else{
+          //   // debugger
+          //   // console.log(location.protocol + '// '+location.host + '/#/home')
+          //   location.href ='file:///android_asset/www/index.html#/login'
+            
+          // }
         })
         .catch((err)=>{
           console.log(err)

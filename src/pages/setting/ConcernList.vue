@@ -5,7 +5,7 @@
         <template v-for="(item,i) in list">
           <div class="sort_list">
             <h3 class="listIndex">{{item.index}}</h3>
-            <template v-for="(bridge,i) in item.bridges">
+            <template v-for="(bridge,index) in item.bridges">
               <div class="bridgeName"
                    :class="{'isCare':bridge.isCare}"
                    @click="toggleCare(bridge)" >
@@ -43,15 +43,22 @@
             list:null,
             listLength:0,
             isCare:null,
-            isCareLength:0,
             newbridgeIdArrStorage:[],
             listIndex:[],
             scroll:null,
             touch:null,
             scrollY:0,
-            listHeight:[]
+            listHeight:[],
+            totalBridges:[],
+            isCareLength:0
           }
       },
+      // computed:{
+      //   isCareLength(){
+      //     let isCareBridge = this.totalBridges.filter(bridge => bridge.isCare == 1)
+      //     return isCareBridge.length
+      //   }
+      // },
       created(){
         this.getConcernList();
         // console.log(this)
@@ -79,23 +86,27 @@
         list: {
           handler(newList) {
             let _this = this
-             let temp = [];
-            _this.isCare = newList.filter(function (item) {
-              return item.bridges[0].isCare == 1
+            let temp = [];
+            this.totalBridges = []
+            newList.forEach(item =>{
+              if(item.bridges.length){
+                item.bridges.forEach(bridge => {
+                  this.totalBridges.push(bridge)
+                })
+              }
             })
-            _this.isCareLength = _this.isCare.length
-
-            console.log(_this.isCareLength)
+          let isCareBridge = this.totalBridges.filter(bridge => bridge.isCare == 1)
+          this.isCareLength = isCareBridge.length
             if(_this.isCareLength){
-              _this.isCare.forEach(function (item) {
-                temp.push(item.bridges[0].bridgeId)
+              _this.totalBridges.forEach(function (item) {
+                if(item.isCare){
+                  temp.push(item.bridgeId)
+                }
               })
               _this.newbridgeIdArrStorage = temp.join('#')
-            }else {
-              _this.newbridgeIdArrStorage = _this.isCare[0]
             }
           },
-          deep: true
+          deep: true,
         },
       },
       methods:{
@@ -142,17 +153,18 @@
         //
         // },
         selectAll(){
-          if (this.isCareLength != this.listLength) {
-            this.list.forEach(function (item) {
-              item.bridges[0].isCare = 1
-            })
-          }else {
-            // this.list = Storage.get('tempList')
-            this.list.forEach(function (item) {
-              item.bridges[0].isCare = 0
-            })
-            console.log(this.list)
-          }
+          this.list.forEach(items => {
+              if (this.isCareLength != this.listLength) {
+                items.bridges.forEach(function (item) {
+                  item.isCare = 1
+                })
+              }else {
+                // this.list = Storage.get('tempList')
+                items.bridges.forEach(function (item) {
+                  item.isCare = 0
+                })
+              }
+          })
         },
         confirm(){
           if (this.isCareLength==0){
@@ -181,7 +193,11 @@
 
         },
         toggleCare(bridge){
-          bridge.isCare = !bridge.isCare
+          if(bridge.isCare == 1){
+            bridge.isCare = 0
+          }else{
+            bridge.isCare = 1
+          }
         },
         getConcernList(bridgename){
           let _this = this
@@ -200,20 +216,20 @@
           }).then((res) => {
 
             this.list = res.data.data
-            console.log(this.list)
 
             _this.list.forEach(function (item) {
               _this.listIndex.push(item.index)
             })
 
             Storage.set('tempList',this.list);
-
-            this.isCare = this.list.filter(function (item) {
-                return item.bridges[0].isCare == 1
-             })
-            this.listLength = this.list.length
-            this.isCareLength = this.isCare.length
-
+            this.list.forEach(item =>{
+              if(item.bridges.length){
+                item.bridges.forEach(bridge => {
+                  this.totalBridges.push(bridge)
+                })
+              }
+            })
+            this.listLength = this.totalBridges.length
             this.$vux.loading.hide()
           }).catch((err) => {
             console.log('error', err)

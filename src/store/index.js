@@ -99,8 +99,7 @@ const actions = { //自定义触发mutations里函数的方法，context与store
 
     beginGetTotleList(context) {
         context.commit('getConcernList')
-    }
-
+    },
 };
 
 export default new Vuex.Store({

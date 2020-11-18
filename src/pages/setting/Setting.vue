@@ -50,13 +50,33 @@
             this.type  = type
           },
           changeRole(){
+            let loginName = 'szyw'
             if (this.$store.getters.getUserName == '市政运维') {
-              this.$store.commit('changeRoleId','2c9381c46ab405ed016ab549616504f1')
-              this.$store.commit('changeRoleName','市政领导')
+              loginName = 'szld'
             }else {
-              this.$store.commit('changeRoleId','2c9381c46ab405ed016ab549616504f0')
-              this.$store.commit('changeRoleName','市政运维')
+              loginName = 'szyw'
             }
+            this.$axios({
+              url:'getUserInfo.mvc',
+              method:'post',
+              params:{
+                loginName
+              }
+            })
+            .then((res)=>{
+              if(res.data.data){
+                let {role,userId,userName} = {...res.data.data}
+                // debugger
+                this.$store.commit('changeRole',role)
+                this.$store.commit('changeRoleId',userId)
+                this.$store.commit('changeRoleName',userName)
+              }
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+
+
           },
           // gobackhome(){
           //   // alert(location.protocol + '//'+location.host + '/#/home')

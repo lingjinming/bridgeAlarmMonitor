@@ -14,8 +14,8 @@ export default {
           method:'post',
           params:{
             // loginName: window.localStorage.loginId ,
-            loginName: 'szyw'
-            // loginName: 'szld'
+            // loginName: 'szyw'
+            loginName: 'szld'
           }
         })
         .then((res)=>{
@@ -25,12 +25,6 @@ export default {
             this.$store.commit('changeRoleId',userId)
             this.$store.commit('changeRoleName',userName)
           }
-          // else{
-          //   // debugger
-          //   // console.log(location.protocol + '// '+location.host + '/#/home')
-          //   location.href ='file:///android_asset/www/index.html#/login'
-            
-          // }
         })
         .catch((err)=>{
           console.log(err)

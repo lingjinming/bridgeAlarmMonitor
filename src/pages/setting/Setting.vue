@@ -71,7 +71,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .Setting {
   background: #efefef;
   font-size: .32rem;

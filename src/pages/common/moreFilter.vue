@@ -129,7 +129,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .w-title {
     height: 30px;
     line-height: 30px;

@@ -41,7 +41,7 @@ export default {
 <style lang="less">
   @import 'assets/css/style.css';
 </style>
-<style lang="scss">
+<style lang="less">
   *{
     margin: 0;
     padding: 0;

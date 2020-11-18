@@ -70,7 +70,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .small-win{
     width: 50px;
     height: auto;

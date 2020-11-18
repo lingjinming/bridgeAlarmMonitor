@@ -89,7 +89,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .formwrap{
     position: relative;
     height: 100%;

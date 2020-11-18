@@ -58,7 +58,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   ul {
      height: calc(100vh - 3.2rem);
     overflow-y: auto;

@@ -85,7 +85,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .concernList{
     position: absolute;
     top: calc(1rem + 44px);

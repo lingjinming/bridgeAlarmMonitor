@@ -308,7 +308,6 @@
         })
           .then((res)=>{
             let resData = res.data.data
-            console.log(resData)
             _this.defaultTypeArr = resData
             _this.alarmStateId = resData[0].id;
             _this.tabsOrder.splice(0,1,resData[0].name)
@@ -333,7 +332,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .container{
     overflow: hidden;
   }

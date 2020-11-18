@@ -85,7 +85,7 @@
 
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .m-search-right {
     background: #fff;
     width: 255px;

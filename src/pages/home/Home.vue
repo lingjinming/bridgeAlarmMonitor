@@ -305,7 +305,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .alarm-num {
     box-sizing: border-box;
     height: 100%;

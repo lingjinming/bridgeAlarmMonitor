@@ -32,7 +32,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="less">
   .header {
     width: 100%;
     .back{

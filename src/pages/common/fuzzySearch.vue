@@ -119,7 +119,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .search-header {
     height: .86rem;
     line-height: .86rem;

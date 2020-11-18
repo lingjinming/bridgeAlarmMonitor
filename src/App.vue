@@ -13,23 +13,24 @@ export default {
           url:'getUserInfo.mvc',
           method:'post',
           params:{
-            loginName: window.localStorage.loginId ,
+            // loginName: window.localStorage.loginId ,
+            loginName: 'szyw'
             // loginName: 'szld'
           }
         })
         .then((res)=>{
           if(res.data.data){
             let {role,roleId,userId,userName} = {...res.data.data}
-
             this.$store.commit('changeRole',role)
             this.$store.commit('changeRoleId',userId)
             this.$store.commit('changeRoleName',userName)
-          }else{
-            // debugger
-            // console.log(location.protocol + '// '+location.host + '/#/home')
-            location.href ='file:///android_asset/www/index.html#/login'
-            
           }
+          // else{
+          //   // debugger
+          //   // console.log(location.protocol + '// '+location.host + '/#/home')
+          //   location.href ='file:///android_asset/www/index.html#/login'
+            
+          // }
         })
         .catch((err)=>{
           console.log(err)
@@ -40,7 +41,7 @@ export default {
 <style lang="less">
   @import 'assets/css/style.css';
 </style>
-<style lang="scss">
+<style lang="less">
   *{
     margin: 0;
     padding: 0;

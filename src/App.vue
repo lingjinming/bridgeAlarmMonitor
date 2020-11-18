@@ -15,6 +15,7 @@ export default {
           params:{
             // loginName: window.localStorage.loginId ,
             loginName: 'szyw'
+            // loginName: 'szld'
           }
         })
         .then((res)=>{

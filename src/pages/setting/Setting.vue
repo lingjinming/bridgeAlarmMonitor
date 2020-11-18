@@ -51,7 +51,7 @@
           },
           changeRole(){
             if (this.$store.getters.getUserName == '市政运维') {
-              this.$store.commit('changeRoleId','2c9381c46ab405ed016ab5440dcd04eb')
+              this.$store.commit('changeRoleId','2c9381c46ab405ed016ab549616504f1')
               this.$store.commit('changeRoleName','市政领导')
             }else {
               this.$store.commit('changeRoleId','2c9381c46ab405ed016ab549616504f0')

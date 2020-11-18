@@ -42,14 +42,20 @@
       Form
     },
     created(){
-      this.getOptions("bridgebackstate","未确认") //报警处置
-      let ua = navigator.userAgent.toLowerCase();//获取浏览器的userAgent,并转化为小写——注：userAgent是用户可以修改的
-      console.log(ua)
-      let isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);//判断是否是苹果手机，是则是true
-      if (!isIos) {
-        document.getElementById('fileUpload').setAttribute("capture","camera");
-        // console('非苹果手机')
-      }
+      
+    },
+    mounted() {
+      this.$nextTick(()=>{
+        this.getOptions("bridgebackstate","未确认") //报警处置
+        let ua = navigator.userAgent.toLowerCase();//获取浏览器的userAgent,并转化为小写——注：userAgent是用户可以修改的
+        // console.log(ua)
+        let isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);//判断是否是苹果手机，是则是true
+        if (!isIos) {
+          
+          document.getElementById('fileUpload').setAttribute("capture","camera");
+          // console('非苹果手机')
+        }
+      })
     },
     data(){
       return{
@@ -133,7 +139,7 @@
           processData: false,
           contentType: false
         }).done(function(res) {
-          console.log(res)
+          // console.log(res)
           setTimeout(function () {
             _this.$vux.toast.show({
               text: res.message,

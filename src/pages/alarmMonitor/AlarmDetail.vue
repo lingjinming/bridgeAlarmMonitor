@@ -91,7 +91,7 @@
             </tr>
             <tr>
               <td><label>发送状态:</label></td>
-              <td v-cloak>{{msg.Status}}</td>
+              <td v-cloak>{{msg.status}}</td>
             </tr>
             <tr>
               <td><label>发送时间 :</label></td>

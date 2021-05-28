@@ -57,6 +57,12 @@ let router = new Router({
                             import ('@/pages/report/Report')
                     },
                     {
+                        path: 'pdfview',
+                        name: 'pdfView',
+                        component: () =>
+                            import ('@/pages/report/pdfview')
+                    },
+                    {
                         path: 'setting',
                         name: 'Setting',
                         component: () =>

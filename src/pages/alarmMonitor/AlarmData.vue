@@ -462,51 +462,51 @@
             };
         }
         var option = {
-            tooltip: {
-                trigger: 'axis',
-                // 设置字体的样式，显 示点击点位的信息
-                textStyle: {
-                    fontFamily: 'Microsoft YaHei',
-                    fontSize: 12
-                },
-                extraCssText: 'align: left;',
-                formatter: function(params) {
-                    if (params.length > 1) {
-                        if (params[1].value == undefined) {
-                            return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />';
-                        } else {
-                            return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />'
-                                /*+ params[1].seriesName + '：' + params[1].value + '<br />' + params[2].seriesName + '：' + params[2].value + '<br />'
-                                + params[3].seriesName + '：' + params[3].value + '<br />' + params[4].seriesName + '：' + params[4].value + '<br />'
-                                + params[5].seriesName + '：' + params[5].value + '<br />' + params[6].seriesName + '：' + params[6].value + '<br />';*/
-                                +
-                                params[1].seriesName + '：' + params[1].value + '<br />' +
-                                params[3].seriesName + '：' + params[3].value + '<br />' +
-                                params[5].seriesName + '：' + params[5].value + '<br />' +
-                                params[6].seriesName + '：' + params[6].value + '<br />' +
-                                params[4].seriesName + '：' + params[4].value + '<br />' +
-                                params[2].seriesName + '：' + params[2].value + '<br />';
-                        }
-                    } else {
-                        if (params[0] != undefined) {
-                            return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />'
-                                /*+ '一级正向：' + thdata.onemax + '<br />' + '一级反向：'  + thdata.onemin + '<br />'
-                                + '二级正向：' + thdata.twomax + '<br />' + '二级反向：'  + thdata.twomin + '<br />'
-                                + '三级正向：' + thdata.thrmax + '<br />' + '三级反向：'  + thdata.thrmin + '<br />';*/
-                                +
-                                '一级正向：' + thdata.onemax + '<br />' +
-                                '二级正向：' + thdata.twomax + '<br />' +
-                                '三级正向：' + thdata.thrmax + '<br />' +
-                                '三级反向：' + thdata.thrmin + '<br />' +
-                                '二级反向：' + thdata.twomin + '<br />' +
-                                '一级反向：' + thdata.onemin + '<br />';
-                        }
-                    }
-                },
-                axisPointer: {
-                    animation: false
-                }
-            },
+            // tooltip: {
+            //     trigger: 'axis',
+            //     // 设置字体的样式，显 示点击点位的信息
+            //     textStyle: {
+            //         fontFamily: 'Microsoft YaHei',
+            //         fontSize: 12
+            //     },
+            //     extraCssText: 'align: left;',
+            //     formatter: function(params) {
+            //         if (params.length > 1) {
+            //             if (params[1].value == undefined) {
+            //                 return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />';
+            //             } else {
+            //                 return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />'
+            //                     /*+ params[1].seriesName + '：' + params[1].value + '<br />' + params[2].seriesName + '：' + params[2].value + '<br />'
+            //                     + params[3].seriesName + '：' + params[3].value + '<br />' + params[4].seriesName + '：' + params[4].value + '<br />'
+            //                     + params[5].seriesName + '：' + params[5].value + '<br />' + params[6].seriesName + '：' + params[6].value + '<br />';*/
+            //                     +
+            //                     params[1].seriesName + '：' + params[1].value + '<br />' +
+            //                     params[3].seriesName + '：' + params[3].value + '<br />' +
+            //                     params[5].seriesName + '：' + params[5].value + '<br />' +
+            //                     params[6].seriesName + '：' + params[6].value + '<br />' +
+            //                     params[4].seriesName + '：' + params[4].value + '<br />' +
+            //                     params[2].seriesName + '：' + params[2].value + '<br />';
+            //             }
+            //         } else {
+            //             if (params[0] != undefined) {
+            //                 return "监测时间：" + formatByLong(params[0].name, 0) + '<br />' + params[0].seriesName + '：' + params[0].value[1] + '<br />'
+            //                     /*+ '一级正向：' + thdata.onemax + '<br />' + '一级反向：'  + thdata.onemin + '<br />'
+            //                     + '二级正向：' + thdata.twomax + '<br />' + '二级反向：'  + thdata.twomin + '<br />'
+            //                     + '三级正向：' + thdata.thrmax + '<br />' + '三级反向：'  + thdata.thrmin + '<br />';*/
+            //                     +
+            //                     '一级正向：' + thdata.onemax + '<br />' +
+            //                     '二级正向：' + thdata.twomax + '<br />' +
+            //                     '三级正向：' + thdata.thrmax + '<br />' +
+            //                     '三级反向：' + thdata.thrmin + '<br />' +
+            //                     '二级反向：' + thdata.twomin + '<br />' +
+            //                     '一级反向：' + thdata.onemin + '<br />';
+            //             }
+            //         }
+            //     },
+            //     axisPointer: {
+            //         animation: false
+            //     }
+            // },
             calculable: true,
             xAxis: [{
                 type: 'time',
@@ -680,9 +680,9 @@
         let alarmLine = echarts.init(document.getElementById("cur-data"));
         alarmLine.clear()
         alarmLine.setOption({
-          tooltip: {
-            trigger: 'axis'
-          },
+          // tooltip: {
+          //   trigger: 'axis'
+          // },
           grid: {
             top:'8%',
             left: '3%',
@@ -864,11 +864,11 @@
       formatTime:function(time){
         let date = new Date(time);
         let Y = date.getFullYear() + '-';
-        let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        let M = (date.getMonth() < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
         let D = date.getDate() + ' ';
-        let h = (date.getHours()+1 < 10 ? '0'+date.getHours() : date.getHours()) + ':';
-        let m = (date.getMinutes()+1 < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
-        let s = date.getSeconds()+1 < 10 ? '0'+date.getSeconds() : date.getSeconds();
+        let h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+        let m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+        let s = date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds();
         if(time== this.startTime){
           return this.startTime=Y+M+D+h+m+s;
         }else if(time== this.endTime){

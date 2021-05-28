@@ -124,6 +124,12 @@
           this.showConfirm = !this.showConfirm;
           this.attachmentUrl = url;
           this.attachmentName = name;
+          // this.$router.push({
+          //   name:'pdfView',
+          //   params:{
+          //     pdfurl:url
+          //   }
+          // })
         }else {
           this.$vux.toast.show({
             text:'暂无附件',
@@ -139,43 +145,48 @@
         if (tempType=='png'||tempType=='jpg'||tempType=='jpeg'||tempType=='gif') {
           this.showImg = !this.showImg
         } else {
-          // window.open(this.attachmentUrl)
-        this.$vux.loading.show({
-          text: '下载中'
-        })
-        this.$axios({ // 用axios发送post请求
-          method: 'post',
-          url: 'getAttachmentFiles.mvc', // 请求地址
-          responseType: 'blob', // 表明返回服务器返回的数据类型
-          params:{
-            attachmentId:this.attachmentId
-          }
-        })
-          .then((res) => { // 处理返回的文件流
+          window.open(this.attachmentUrl)
+        // this.$vux.loading.show({
+        //   text: '下载中'
+        // })
+        // 将参数传给安卓
 
-            // var blob = new Blob([res.data], {type: 'application/actet-stream;charset=utf-8'});
-            // var downloadElement = document.createElement('a');
-            // var href = window.URL.createObjectURL(blob); //创建下载的链接
-            // downloadElement.style.display = 'none';
-            // downloadElement.href = href;
-            // downloadElement.download =fileName ; //下载后文件名
-            // document.body.appendChild(downloadElement);
-            // downloadElement.click(); //点击下载
-            // document.body.removeChild(downloadElement); //下载完成移除元素
-            // window.URL.revokeObjectURL(href); //释放掉blob对象
+        // window.open('http://60.174.207.210:20009/bridge/template/appTemp/'+this.attachmentName)
 
-            download(new Blob([res.data]), this.attachmentName, tempType);
 
-            // 下载成功
-            this.$vux.loading.hide()
-            this.$vux.toast.show({
-                text:'下载成功!',
-                time:1000
-            })
-        })
-        .catch((err)=>{
-          console.log(err)
-        })
+
+        // this.$axios({ // 用axios发送post请求
+        //   method: 'post',
+        //   url: 'getAttachmentFiles.mvc', // 请求地址
+        //   responseType: 'blob', // 表明返回服务器返回的数据类型
+        //   params:{
+        //     attachmentId:this.attachmentId
+        //   }
+        // })
+        //   .then((res) => { // 处理返回的文件流
+        //     // var blob = new Blob([res.data], {type: 'application/actet-stream;charset=utf-8'});
+        //     // var downloadElement = document.createElement('a');
+        //     // var href = window.URL.createObjectURL(blob); //创建下载的链接
+        //     // downloadElement.style.display = 'none';
+        //     // downloadElement.href = href;
+        //     // downloadElement.download =fileName ; //下载后文件名
+        //     // document.body.appendChild(downloadElement);
+        //     // downloadElement.click(); //点击下载
+        //     // document.body.removeChild(downloadElement); //下载完成移除元素
+        //     // window.URL.revokeObjectURL(href); //释放掉blob对象
+
+        //     download(new Blob([res.data]), this.attachmentName, tempType);
+
+        //     // 下载成功
+        //     this.$vux.loading.hide()
+        //     this.$vux.toast.show({
+        //         text:'下载成功!',
+        //         time:1000
+        //     })
+        // })
+        // .catch((err)=>{
+        //   console.log(err)
+        // })
         }
 
       },
@@ -270,7 +281,6 @@
           data: query
         }).then((res) => {
           if(res.status==200 && res.data.code=="success"){
-
             _this.data = res.data.data;
             _this.data.forEach(function (item,index) {
               // "http://112.27.198.15:21000/bridge/template/appTemp/4a4c4be4-7aa3-417b-ac04-b6694833ce8f.pdf"
@@ -316,7 +326,6 @@
             belongId: data
           }
         }).then((res)=>{
-
           _this.getHref(res,'data',index)
 
         }).catch((err)=>{
@@ -354,6 +363,8 @@
                 }
 
                 _this.$set(_this[listData],index,_this[listData][index]) //数据更新dom不跟新的情况
+
+                console.log('_this[listData]',_this[listData])
               })
           }
         }

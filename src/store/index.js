@@ -8,9 +8,11 @@ const state = { //要设置的全局访问的state对象，要设置的初始属
     userId: '',
     role: '',
     maxSize: 10485760,
-    appTempUrl: 'http://60.174.207.208:21000/', //外网
+    // appTempUrl: 'http://60.174.207.208:21000/', //外网
+    appTempUrl: 'http://60.174.207.210:20009/', //外网
     // appTempUrl:'http://10.5.4.115:8000/',//内网
-    appTempURLForJq: 'http://60.174.207.208:21000/bridge/bridgeService/', //外网jq
+    // appTempURLForJq: 'http://60.174.207.208:21000/bridge/bridgeService/', //外网jq
+    appTempURLForJq: 'http://60.174.207.210:20009/bridge/bridgeService/', //外网jq
     // appTempURLForJq:'http://10.5.4.115:8000/bridge/bridgeService/',//内网jq
     supportType: ['bmp', 'jpg', 'jpeg', 'png', 'pdf', 'word', 'doc', 'docx', 'pages', 'xls', 'xlsx'],
     totleList: null,

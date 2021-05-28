@@ -46,7 +46,8 @@ Vue.component('confirm', Confirm)
 Vue.component('x-dialog', XDialog)
 
 Vue.prototype.$axios = axios.create({
-    baseURL: 'http://60.174.207.208:21000/bridge/bridgeService/', //外网
+    // baseURL: 'http://60.174.207.208:21000/bridge/bridgeService/', //外网
+    baseURL: 'http://60.174.207.210:20009/bridge/bridgeService/', //外网
     // baseURL: 'http://10.5.4.115:8000/bridge/bridgeService/',//内网
     // baseURL: 'http://10.100.90.71:9010/bridge/bridgeService/',//内网
     // baseURL: 'http://172.19.2.72:8086/bridge/bridgeService/',//内网

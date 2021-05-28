@@ -65,9 +65,6 @@ export default {
   li{
     list-style: none;
   }
-  .router-link-exact-active{
-
-  }
   .router-link-active{
     color: #27a1f8 !important;
   }
